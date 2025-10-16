@@ -20,26 +20,26 @@
             align-items: center;
             justify-content: center;
             color: #fff;
-            padding: 20px;
+            padding: 15px;
             overflow-x: hidden;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 100%;
             width: 100%;
-            padding: 40px;
+            padding: 25px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
         .prize-wheel {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 30px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
             position: relative;
             animation: spin 4s infinite linear;
         }
@@ -50,7 +50,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 60px;
+            font-size: 48px;
             z-index: 2;
         }
 
@@ -84,8 +84,8 @@
         }
 
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 15px;
             color: #2c3e50;
             position: relative;
         }
@@ -93,49 +93,51 @@
         h1::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 60px;
+            height: 3px;
             background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
             border-radius: 2px;
         }
 
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #7f8c8d;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         .cta-button {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
             border: none;
-            padding: 22px 50px;
-            font-size: 1.5rem;
+            padding: 18px 40px;
+            font-size: 1.3rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            margin: 30px 0;
-            box-shadow: 0 15px 30px rgba(238, 90, 36, 0.4);
+            margin: 25px 0;
+            box-shadow: 0 10px 20px rgba(238, 90, 36, 0.4);
             position: relative;
             overflow: hidden;
+            width: 90%;
+            max-width: 300px;
         }
 
         .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(238, 90, 36, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(238, 90, 36, 0.5);
         }
 
         .rewards {
             display: flex;
             justify-content: space-around;
-            margin: 40px 0;
+            margin: 30px 0;
             flex-wrap: wrap;
         }
 
@@ -143,26 +145,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 15px;
-            width: 100px;
+            margin: 10px;
+            width: 70px;
         }
 
         .reward-icon {
             background: #f8f9fa;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
-            font-size: 28px;
+            margin-bottom: 8px;
+            font-size: 24px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             color: #ff6b6b;
         }
 
         .reward-text {
-            font-size: 14px;
+            font-size: 12px;
             color: #555;
             font-weight: 600;
         }
@@ -170,28 +172,28 @@
         .random-message {
             background: #f8f9fa;
             border-radius: 15px;
-            padding: 20px;
-            margin: 30px 0;
+            padding: 15px;
+            margin: 20px 0;
             color: #555;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
-            min-height: 60px;
+            min-height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .disclaimer {
-            font-size: 14px;
+            font-size: 12px;
             color: #7f8c8d;
-            margin-top: 25px;
-            line-height: 1.5;
+            margin-top: 20px;
+            line-height: 1.4;
         }
 
         .sparkle {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             background: #f1c40f;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             animation: sparkle 3s infinite;
@@ -232,8 +234,8 @@
         .notification-modal {
             background: white;
             border-radius: 20px;
-            padding: 40px;
-            max-width: 400px;
+            padding: 30px;
+            max-width: 90%;
             width: 90%;
             text-align: center;
             transform: scale(0.8);
@@ -246,33 +248,33 @@
         }
 
         .money-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
             animation: bounce 1s infinite;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
 
         .notification-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #2c3e50;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .notification-amount {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: bold;
             color: #27ae60;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .notification-message {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #7f8c8d;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .continue-button {
@@ -286,6 +288,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
+            width: 90%;
+            max-width: 250px;
         }
 
         .continue-button:hover {
@@ -293,34 +297,47 @@
             box-shadow: 0 15px 30px rgba(39, 174, 96, 0.4);
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.2rem;
+        /* Mobile-specific styles */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                padding: 40px;
             }
             
-            .container {
-                padding: 30px 20px;
+            h1 {
+                font-size: 2.8rem;
             }
             
             .cta-button {
-                font-size: 1.3rem;
-                padding: 18px 40px;
+                font-size: 1.5rem;
+                padding: 22px 50px;
             }
             
             .rewards {
-                justify-content: center;
+                justify-content: space-around;
             }
             
             .reward {
-                margin: 10px;
+                width: 100px;
+            }
+            
+            .reward-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+            
+            .reward-text {
+                font-size: 14px;
             }
             
             .notification-modal {
-                padding: 30px 20px;
+                max-width: 400px;
+                padding: 40px;
             }
             
             .notification-amount {
-                font-size: 2.8rem;
+                font-size: 3.5rem;
             }
         }
     </style>
