@@ -36,6 +36,39 @@
             overflow: hidden;
         }
 
+        .progress-container {
+            margin: 20px 0;
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            z-index: 2;
+        }
+
         .prize-wheel {
             width: 120px;
             height: 120px;
@@ -132,6 +165,15 @@
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(238, 90, 36, 0.5);
+        }
+
+        .visit-all-button {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            margin-top: 15px;
+        }
+
+        .visit-all-button:hover {
+            box-shadow: 0 15px 30px rgba(142, 68, 173, 0.5);
         }
 
         .rewards {
@@ -290,11 +332,76 @@
             box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
             width: 90%;
             max-width: 250px;
+            margin-bottom: 10px;
         }
 
         .continue-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(39, 174, 96, 0.4);
+        }
+
+        .next-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            margin-top: 10px;
+        }
+
+        .next-button:hover {
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        .achievements {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .achievement {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .achievement.unlocked {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .achievement-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .achievement-text {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .achievement.locked {
+            opacity: 0.5;
+        }
+
+        .achievement.locked .achievement-text {
+            color: #7f8c8d;
+        }
+
+        .countdown {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 1rem;
         }
 
         /* Mobile-specific styles */
@@ -354,11 +461,22 @@
         <h1>Click & Win Instant Rewards!</h1>
         <p class="subtitle">Click below to randomly unlock one of our exclusive rewards. Every click is a new chance to win amazing prizes!</p>
         
+        <div class="countdown" id="countdown">⏰ Offer expires in: 23:59:45</div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+            <div class="progress-text" id="progressText">0/21 links visited</div>
+        </div>
+        
         <div class="random-message" id="randomMessage">
             Ready to discover your reward? Click below to reveal your prize!
         </div>
         
         <a href="#" id="ctaButton" class="cta-button" onclick="handleClick()">🎁 REVEAL MY PRIZE!</a>
+        
+        <a href="#" id="visitAllButton" class="cta-button visit-all-button" onclick="visitAllLinks()" style="display: none;">
+            🏆 VISIT ALL LINKS & WIN BIG!
+        </a>
         
         <div class="rewards">
             <div class="reward">
@@ -379,6 +497,25 @@
             </div>
         </div>
         
+        <div class="achievements" id="achievements">
+            <div class="achievement locked" id="achievement1">
+                <div class="achievement-icon">🔥</div>
+                <div class="achievement-text">5 Links</div>
+            </div>
+            <div class="achievement locked" id="achievement2">
+                <div class="achievement-icon">⭐</div>
+                <div class="achievement-text">10 Links</div>
+            </div>
+            <div class="achievement locked" id="achievement3">
+                <div class="achievement-icon">💎</div>
+                <div class="achievement-text">15 Links</div>
+            </div>
+            <div class="achievement locked" id="achievement4">
+                <div class="achievement-icon">👑</div>
+                <div class="achievement-text">All 21</div>
+            </div>
+        </div>
+        
         <p class="disclaimer">
             *Each click randomly reveals one of our exclusive rewards. Limited time offers available. 
             Click to reveal your prize and discover amazing opportunities!
@@ -388,11 +525,12 @@
     <!-- Notification Modal -->
     <div class="notification-overlay" id="notificationOverlay">
         <div class="notification-modal">
-            <div class="money-icon">💰</div>
-            <h2 class="notification-title">Congratulations!</h2>
+            <div class="money-icon" id="notificationIcon">💰</div>
+            <h2 class="notification-title" id="notificationTitle">Congratulations!</h2>
             <div class="notification-amount" id="notificationAmount">$5</div>
-            <p class="notification-message">You've earned instant cash rewards! Continue to your prize now.</p>
-            <button class="continue-button" onclick="continueToLink()">Continue to Prize</button>
+            <p class="notification-message" id="notificationMessage">You've earned instant cash rewards!</p>
+            <button class="continue-button" id="continueButton" onclick="continueToLink()">Continue to Prize</button>
+            <button class="continue-button next-button" id="nextButton" onclick="nextLink()" style="display: none;">Next Link</button>
         </div>
     </div>
 
@@ -436,6 +574,59 @@
         ];
 
         let selectedLink = null;
+        let returningFromAd = false;
+        let visitedLinks = new Set();
+        let currentLinkIndex = 0;
+
+        // Initialize from localStorage
+        function initializeProgress() {
+            const savedProgress = localStorage.getItem('visitedLinks');
+            if (savedProgress) {
+                visitedLinks = new Set(JSON.parse(savedProgress));
+                updateProgress();
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('visitedLinks', JSON.stringify([...visitedLinks]));
+        }
+
+        // Update progress display
+        function updateProgress() {
+            const progress = (visitedLinks.size / links.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressBar').textContent = `${Math.round(progress)}%`;
+            document.getElementById('progressText').textContent = `${visitedLinks.size}/${links.length} links visited`;
+            
+            // Check achievements
+            checkAchievements();
+            
+            // Show visit all button if some progress made
+            if (visitedLinks.size > 0 && visitedLinks.size < links.length) {
+                document.getElementById('visitAllButton').style.display = 'inline-block';
+            }
+        }
+
+        // Check and unlock achievements
+        function checkAchievements() {
+            if (visitedLinks.size >= 5) {
+                document.getElementById('achievement1').classList.add('unlocked');
+                document.getElementById('achievement1').classList.remove('locked');
+            }
+            if (visitedLinks.size >= 10) {
+                document.getElementById('achievement2').classList.add('unlocked');
+                document.getElementById('achievement2').classList.remove('locked');
+            }
+            if (visitedLinks.size >= 15) {
+                document.getElementById('achievement3').classList.add('unlocked');
+                document.getElementById('achievement3').classList.remove('locked');
+            }
+            if (visitedLinks.size >= links.length) {
+                document.getElementById('achievement4').classList.add('unlocked');
+                document.getElementById('achievement4').classList.remove('locked');
+            }
+        }
 
         // Handle click event
         function handleClick() {
@@ -464,16 +655,64 @@
 
         // Show money notification
         function showNotification() {
-            // Generate random amount between $5 and $20
-            const minAmount = 5;
-            const maxAmount = 20;
+            // Generate random amount based on progress
+            let minAmount = 5;
+            let maxAmount = 20;
+            
+            // Increase rewards based on progress
+            if (visitedLinks.size >= 5) {
+                minAmount = 10;
+                maxAmount = 30;
+            }
+            if (visitedLinks.size >= 10) {
+                minAmount = 15;
+                maxAmount = 40;
+            }
+            if (visitedLinks.size >= 15) {
+                minAmount = 20;
+                maxAmount = 50;
+            }
+            
             const randomAmount = Math.floor(Math.random() * (maxAmount - minAmount + 1)) + minAmount;
             
             // Update notification amount
             document.getElementById('notificationAmount').textContent = `$${randomAmount}`;
             
+            // Update notification icon based on progress
+            const icons = ['💰', '💎', '🏆', '👑'];
+            const iconIndex = Math.min(Math.floor(visitedLinks.size / 5), 3);
+            document.getElementById('notificationIcon').textContent = icons[iconIndex];
+            
+            // Update notification title based on progress
+            const titles = ['Congratulations!', 'Great Job!', 'Awesome!', 'Incredible!', 'Amazing!'];
+            const titleIndex = Math.min(Math.floor(visitedLinks.size / 5), 4);
+            document.getElementById('notificationTitle').textContent = titles[titleIndex];
+            
+            // Update notification message based on progress
+            let message = 'You\'ve earned instant cash rewards!';
+            if (visitedLinks.size >= 5) {
+                message = 'You\'re on fire! Keep earning more!';
+            }
+            if (visitedLinks.size >= 10) {
+                message = 'Amazing progress! Your rewards are getting bigger!';
+            }
+            if (visitedLinks.size >= 15) {
+                message = 'Incredible! Almost there for the ultimate prize!';
+            }
+            if (visitedLinks.size >= links.length) {
+                message = 'Congratulations! You\'ve visited all links!';
+            }
+            document.getElementById('notificationMessage').textContent = message;
+            
             // Show notification modal
             document.getElementById('notificationOverlay').classList.add('active');
+            
+            // Show next button if not all links visited
+            if (visitedLinks.size < links.length) {
+                document.getElementById('nextButton').style.display = 'inline-block';
+            } else {
+                document.getElementById('nextButton').style.display = 'none';
+            }
         }
 
         // Continue to selected link
@@ -481,9 +720,95 @@
             // Hide notification
             document.getElementById('notificationOverlay').classList.remove('active');
             
+            // Set flag for when user returns
+            sessionStorage.setItem('returningFromAd', 'true');
+            
+            // Mark link as visited
+            if (selectedLink) {
+                visitedLinks.add(selectedLink);
+                saveProgress();
+                updateProgress();
+            }
+            
             // Redirect to the selected link
             window.location.href = selectedLink;
         }
+
+        // Go to next link
+        function nextLink() {
+            // Hide notification
+            document.getElementById('notificationOverlay').classList.remove('active');
+            
+            // Set flag for when user returns
+            sessionStorage.setItem('returningFromAd', 'true');
+            
+            // Find next unvisited link
+            let nextLink = null;
+            for (const link of links) {
+                if (!visitedLinks.has(link)) {
+                    nextLink = link;
+                    break;
+                }
+            }
+            
+            if (nextLink) {
+                selectedLink = nextLink;
+                visitedLinks.add(nextLink);
+                saveProgress();
+                updateProgress();
+                
+                // Redirect to the next link
+                window.location.href = nextLink;
+            }
+        }
+
+        // Visit all links
+        function visitAllLinks() {
+            // Show special notification
+            document.getElementById('notificationIcon').textContent = '👑';
+            document.getElementById('notificationTitle').textContent = 'Ultimate Challenge!';
+            document.getElementById('notificationAmount').textContent = '$100';
+            document.getElementById('notificationMessage').textContent = 'Visit all 21 links to unlock the ultimate prize of $100!';
+            
+            document.getElementById('continueButton').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'inline-block';
+            
+            document.getElementById('notificationOverlay').classList.add('active');
+        }
+
+        // Update countdown timer
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            let hours = 23;
+            let minutes = 59;
+            let seconds = 45;
+            
+            setInterval(() => {
+                if (seconds > 0) {
+                    seconds--;
+                } else if (minutes > 0) {
+                    minutes--;
+                    seconds = 59;
+                } else if (hours > 0) {
+                    hours--;
+                    minutes = 59;
+                    seconds = 59;
+                }
+                
+                countdownElement.textContent = `⏰ Offer expires in: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Check if user is returning from ad
+        window.onload = function() {
+            initializeProgress();
+            updateCountdown();
+            
+            if (sessionStorage.getItem('returningFromAd') === 'true') {
+                sessionStorage.removeItem('returningFromAd');
+                setTimeout(showNotification, 500); // Show notification after a short delay
+            }
+        };
 
         // Add click animation
         document.getElementById('ctaButton').addEventListener('click', function(e) {
