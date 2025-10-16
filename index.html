@@ -634,6 +634,9 @@
             const randomIndex = Math.floor(Math.random() * links.length);
             selectedLink = links[randomIndex];
             
+            // Store selected link in sessionStorage
+            sessionStorage.setItem('selectedLink', selectedLink);
+            
             // Select a random message
             const randomMessageIndex = Math.floor(Math.random() * messages.length);
             const selectedMessage = messages[randomMessageIndex];
@@ -723,15 +726,19 @@
             // Set flag for when user returns
             sessionStorage.setItem('returningFromAd', 'true');
             
-            // Mark link as visited
-            if (selectedLink) {
+            // Get selected link from sessionStorage
+            const storedLink = sessionStorage.getItem('selectedLink');
+            if (storedLink) {
+                selectedLink = storedLink;
+                
+                // Mark link as visited
                 visitedLinks.add(selectedLink);
                 saveProgress();
                 updateProgress();
+                
+                // Redirect to the selected link
+                window.location.href = selectedLink;
             }
-            
-            // Redirect to the selected link
-            window.location.href = selectedLink;
         }
 
         // Go to next link
@@ -753,6 +760,7 @@
             
             if (nextLink) {
                 selectedLink = nextLink;
+                sessionStorage.setItem('selectedLink', selectedLink);
                 visitedLinks.add(nextLink);
                 saveProgress();
                 updateProgress();
@@ -803,6 +811,12 @@
         window.onload = function() {
             initializeProgress();
             updateCountdown();
+            
+            // Check for stored selected link
+            const storedLink = sessionStorage.getItem('selectedLink');
+            if (storedLink) {
+                selectedLink = storedLink;
+            }
             
             if (sessionStorage.getItem('returningFromAd') === 'true') {
                 sessionStorage.removeItem('returningFromAd');
